@@ -186,7 +186,7 @@ resource "azurerm_virtual_machine_extension" "postinstall" {
     settings = <<SETTINGS
     {
         "fileUris" : [
-            "https://cs44d51ae0a783fx471dx99d.file.core.windows.net/cs-brettaj-gmail-com-1003000087756a10/HS_Install.ps1"
+            "https://postdeploystorage.blob.core.windows.net/psscript/HS_Install.ps1"
         ],
         "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File HS_Install.ps1"        
     }
