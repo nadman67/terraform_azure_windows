@@ -148,9 +148,9 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     }
 
     storage_image_reference {
-        publisher = "MicrosoftWindowsServer"
-        offer     = "WindowsServer"
-        sku       = "2012-R2-Datacenter"
+        publisher = "RedHat"
+        offer     = "RHEL"
+        sku       = "7-RAW"
         version   = "latest"
     }
 
@@ -159,10 +159,6 @@ resource "azurerm_virtual_machine" "myterraformvm" {
         admin_username = "j2user"
         admin_password ="j2andUtoo"    
     }   
-
-    os_profile_windows_config {
-        provision_vm_agent = true
-    }
 
     
     boot_diagnostics {
