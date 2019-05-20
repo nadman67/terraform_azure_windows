@@ -188,7 +188,7 @@ resource "azurerm_virtual_machine_extension" "postinstall" {
         "fileUris" : [
             "${var.extension_file_uri}"
         ],
-        "${var.extension_command_to_execute}"        
+        "commandToExecute" : "${var.extension_command_to_execute}"        
     }
     SETTINGS
     
