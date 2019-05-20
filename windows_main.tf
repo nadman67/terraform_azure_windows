@@ -161,12 +161,12 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     }   
 
     os_profile_windows_config {
-	count = 0
+	enabled=false
         provision_vm_agent = true
     }
         
     os_profile_linux_config {
-	count = 1
+	enables=true
         disable_password_authentication = "false"
     }
     boot_diagnostics {
