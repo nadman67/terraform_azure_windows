@@ -160,10 +160,15 @@ resource "azurerm_virtual_machine" "myterraformvm" {
         admin_password ="${var.os_profile_admin_password}"    
     }   
 
-    "${var.os_profile_config}"
-    
-
-    
+    os_profile_windows_config {
+	count = 0
+        provision_vm_agent = true
+    }
+        
+    os_profile_linux_config {
+	count = 1
+        disable_password_authentication = "false"
+    }
     boot_diagnostics {
         enabled     = "true"
         storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
