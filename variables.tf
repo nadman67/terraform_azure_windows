@@ -100,7 +100,7 @@ variable "extension_type_handler_version" {
 
 variable "extension_file_uri" {
   type = "string"
-  default = "https://postdeploystorage.blob.core.windows.net/scripts/HS_Install.ps1$"
+  default = "https://postdeploystorage.blob.core.windows.net/scripts/HS_Install.ps1"
   }
 
 variable "extension_command_to_execute" {
