@@ -1,11 +1,11 @@
 provider "azurerm" {
 }
 resource "azurerm_resource_group" "myterraformgroup" {
-        name = "${var.resource_group}"
+        name = "${var.resource_group_name}"
         location = "eastus"
 }
 resource "azurerm_virtual_network" "myterraformnetwork" {
-    name                = "myVnet"
+    name                = "${var.virtual_network_name}"
     address_space       = ["10.0.0.0/16"]
     location            = "eastus"
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
@@ -15,23 +15,23 @@ resource "azurerm_virtual_network" "myterraformnetwork" {
     }
 }
 resource "azurerm_subnet" "myterraformsubnet" {
-    name                 = "mySubnet"
+    name                 = "${var.subnet_name}"
     resource_group_name  = "${azurerm_resource_group.myterraformgroup.name}"
     virtual_network_name = "${azurerm_virtual_network.myterraformnetwork.name}"
-    address_prefix       = "10.0.2.0/24"
+    address_prefix       = "${var.subnet_address_prefix}"
 }
 resource "azurerm_public_ip" "myterraformpublicip" {
-    name                         = "myPublicIP"
+    name                         = "${var.public_ip_name}"
     location                     = "eastus"
     resource_group_name          = "${azurerm_resource_group.myterraformgroup.name}"
-    allocation_method            = "Dynamic"
+    allocation_method            = "${var.public_ip_allocation_method}"
 
     tags {
         environment = "Terraform Demo"
     }
 }
 resource "azurerm_network_security_group" "myterraformnsg" {
-    name                = "myNetworkSecurityGroup"
+    name                = "${var.network_security_group_name}"
     location            = "eastus"
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
     
@@ -98,13 +98,13 @@ resource "azurerm_network_security_group" "myterraformnsg" {
     }
 }
 resource "azurerm_network_interface" "myterraformnic" {
-    name                = "myNIC"
+    name                = "${var.network_interface_name}"
     location            = "eastus"
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
     network_security_group_id = "${azurerm_network_security_group.myterraformnsg.id}"
 
     ip_configuration {
-        name                          = "myNicConfiguration"
+        name                          = "${var.ip_configuration_name}"
         subnet_id                     = "${azurerm_subnet.myterraformsubnet.id}"
         private_ip_address_allocation = "Dynamic"
         public_ip_address_id          = "${azurerm_public_ip.myterraformpublicip.id}"
@@ -134,30 +134,30 @@ resource "azurerm_storage_account" "mystorageaccount" {
     }
 }
 resource "azurerm_virtual_machine" "myterraformvm" {
-    name                  = "myVM"
+    name                  = "${var.virtual_machine_name}"
     location              = "eastus"
     resource_group_name   = "${azurerm_resource_group.myterraformgroup.name}"
     network_interface_ids = ["${azurerm_network_interface.myterraformnic.id}"]
     vm_size               = "Standard_DS1_v2"
 
     storage_os_disk {
-        name              = "myOsDisk"
+        name              = "${var.storage_os_disk_name}"
         caching           = "ReadWrite"
         create_option     = "FromImage"
         managed_disk_type = "Premium_LRS"
     }
 
     storage_image_reference {
-        publisher = "MicrosoftWindowsServer"
-        offer     = "WindowsServer"
-        sku       = "2012-R2-Datacenter"
+        publisher = "${var.image_reference_publisher}"
+        offer     = "${var.image_reference_offer}"
+        sku       = "${var.image_reference_sku}"
         version   = "latest"
     }
 
     os_profile {
-        computer_name  = "myvm"
-        admin_username = "j2user"
-        admin_password ="j2andUtoo"    
+        computer_name  = "${var.os_profile_computer_name}"
+        admin_username = "${var.os_profile_admin_username}"
+        admin_password ="${var.os_profile_admin_password}"    
     }   
 
     os_profile_windows_config {
@@ -179,16 +179,16 @@ resource "azurerm_virtual_machine_extension" "postinstall" {
     location        = "eastus"
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
     virtual_machine_name = "${azurerm_virtual_machine.myterraformvm.name}"
-    publisher           = "Microsoft.Compute"
-    type                = "CustomScriptExtension"
-    type_handler_version    = "1.8"
+    publisher           = "${var.extension_publisher}"
+    type                = "${var.extension_type}"
+    type_handler_version    = "${var.extension_type_handler_version}"
 
     settings = <<SETTINGS
     {
         "fileUris" : [
-            "https://postdeploystorage.blob.core.windows.net/scripts/HS_Install.ps1"
+            "${var.extension_file_uri}"
         ],
-        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File HS_Install.ps1"        
+        "${var.extension_command_to_execute}"        
     }
     SETTINGS
     
