@@ -1,7 +1,7 @@
 provider "azurerm" {
 }
 resource "azurerm_resource_group" "myterraformgroup" {
-        name = "myResourceGroup"
+        name = "${var.resource_group}"
         location = "eastus"
 }
 resource "azurerm_virtual_network" "myterraformnetwork" {
