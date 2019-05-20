@@ -1,6 +1,5 @@
 variable "resource_group_name" {
   type = "string"
-  default = "myResourceGroup"
   }
 
 variable "virtual_network_name"{
@@ -45,7 +44,6 @@ variable "ip_configuration_name" {
 
 variable "virtual_machine_name" {
   type = "string"
-  default = "myVM"
   }
 
 variable "storage_os_disk_name" {
@@ -75,12 +73,10 @@ variable "os_profile_computer_name" {
 
 variable "os_profile_admin_username" {
   type = "string"
-  default = "j2user"
   }
 
 variable "os_profile_admin_password" {
   type = "string"
-  default = "j2andUtoo"
   }
 
 variable "extension_publisher" {
