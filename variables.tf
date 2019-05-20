@@ -105,5 +105,5 @@ variable "extension_file_uri" {
 
 variable "extension_command_to_execute" {
   type = "string"
-  default = "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File HS_Install.ps1"
+  default = "powershell.exe -ExecutionPolicy Unrestricted -File HS_Install.ps1"
   }
