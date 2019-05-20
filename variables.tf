@@ -103,3 +103,8 @@ variable "extension_command_to_execute" {
   type = "string"
   default = "powershell.exe -ExecutionPolicy Unrestricted -File HS_Install.ps1"
   }
+
+variable "os_profile_config" {
+  type = "string"
+  default = "os_profile_windows_config {provision_vm_agent = true}"
+  }
