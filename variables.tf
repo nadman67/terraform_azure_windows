@@ -108,3 +108,13 @@ variable "os_profile_config" {
   type = "string"
   default = "os_profile_windows_config {provision_vm_agent = true}"
   }
+
+variable "is_windows" {
+  description = "if windows deployment, set this variable to true"
+  default = false
+  }
+
+variable "is_linux" {
+  description = "if linux deployment, set his variable to true"
+  default = false
+  }
