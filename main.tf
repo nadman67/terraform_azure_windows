@@ -134,7 +134,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
     }
 }
 resource "azurerm_virtual_machine" "myterraformwindowsvm" {
-    count = "${var.is_windows}"
+    count = "${var.is_windows ? 1 : 0}"
     name                  = "${var.virtual_machine_name}"
     location              = "eastus"
     resource_group_name   = "${azurerm_resource_group.myterraformgroup.name}"
@@ -176,7 +176,7 @@ resource "azurerm_virtual_machine" "myterraformwindowsvm" {
 }
 
 resource "azurerm_virtual_machine" "myterraformlinuxvm" {
-    count = "{var.is_linux}"
+    count = "{var.is_linux ? 1 : 0}"
     name                  = "${var.virtual_machine_name}"
     location              = "eastus"
     resource_group_name   = "${azurerm_resource_group.myterraformgroup.name}"
