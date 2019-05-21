@@ -133,7 +133,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
         environment = "Terraform Demo"
     }
 }
-resource "azurerm_virtual_machine" "myterraformwindowsvm" {
+resource "azurerm_virtual_machine" "${var.virtual_machine_name}" {
     count = "${var.is_windows ? 1 : 0}"
     name                  = "${var.virtual_machine_name}"
     location              = "eastus"
