@@ -160,6 +160,9 @@ resource "azurerm_virtual_machine" "myterraformvm" {
         admin_password ="${var.os_profile_admin_password}"    
     }   
 
+    os_profile_windows_config {
+	provision_vm_agent = true
+    }
   
     boot_diagnostics {
         enabled     = "true"
