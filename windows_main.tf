@@ -133,7 +133,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
         environment = "Terraform Demo"
     }
 }
-resource "azurerm_virtual_machine" "myterraformvm" {
+resource "azurerm_virtual_machine" "myterraformwindowsvm" {
     count = 0
     name                  = "${var.virtual_machine_name}"
     location              = "eastus"
@@ -175,7 +175,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     }
 }
 
-resource "azurerm_virtual_machine" "myterraformvm" {
+resource "azurerm_virtual_machine" "myterraformlinuxvm" {
     count = 1
     name                  = "${var.virtual_machine_name}"
     location              = "eastus"
@@ -220,7 +220,7 @@ resource "azurerm_virtual_machine_extension" "postinstall" {
     name            = "extension"
     location        = "eastus"
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
-    virtual_machine_name = "${azurerm_virtual_machine.myterraformvm.name}"
+    virtual_machine_name = "${var.virtual_machine_name}"
     publisher           = "${var.extension_publisher}"
     type                = "${var.extension_type}"
     type_handler_version    = "${var.extension_type_handler_version}"
