@@ -133,8 +133,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
         environment = "Terraform Demo"
     }
 }
-resource "azurerm_virtual_machine" "${var.virtual_machine_name}" {
-    count = "${var.is_windows ? 1 : 0}"
+resource "azurerm_virtual_machine" "myterraformvm" {
     name                  = "${var.virtual_machine_name}"
     location              = "eastus"
     resource_group_name   = "${azurerm_resource_group.myterraformgroup.name}"
@@ -175,52 +174,11 @@ resource "azurerm_virtual_machine" "${var.virtual_machine_name}" {
     }
 }
 
-resource "azurerm_virtual_machine" "myterraformlinuxvm" {
-    count = "${var.is_linux ? 1 : 0}"
-    name                  = "${var.virtual_machine_name}"
-    location              = "eastus"
-    resource_group_name   = "${azurerm_resource_group.myterraformgroup.name}"
-    network_interface_ids = ["${azurerm_network_interface.myterraformnic.id}"]
-    vm_size               = "Standard_DS1_v2"
-
-    storage_os_disk {
-        name              = "${var.storage_os_disk_name}"
-        caching           = "ReadWrite"
-        create_option     = "FromImage"
-        managed_disk_type = "Premium_LRS"
-    }
-
-    storage_image_reference {
-        publisher = "${var.image_reference_publisher}"
-        offer     = "${var.image_reference_offer}"
-        sku       = "${var.image_reference_sku}"
-        version   = "latest"
-    }
-
-    os_profile {
-        computer_name  = "${var.os_profile_computer_name}"
-        admin_username = "${var.os_profile_admin_username}"
-        admin_password ="${var.os_profile_admin_password}"    
-    }   
-
-    os_profile_linux_config {
-        disable_password_authentication = "false"
-    }
-  
-    boot_diagnostics {
-        enabled     = "true"
-        storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
-    }
-
-    tags {
-        environment = "Terraform Demo"
-    }
-}
 resource "azurerm_virtual_machine_extension" "postinstall" {
     name            = "extension"
     location        = "eastus"
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
-    virtual_machine_name = "${var.virtual_machine_name}"
+    virtual_machine_name = "${azurerm_resource_group.myterraformlinuxvm.name}"
     publisher           = "${var.extension_publisher}"
     type                = "${var.extension_type}"
     type_handler_version    = "${var.extension_type_handler_version}"
@@ -235,3 +193,5 @@ resource "azurerm_virtual_machine_extension" "postinstall" {
     SETTINGS
     
 }
+
+
