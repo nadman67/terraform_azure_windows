@@ -11,7 +11,7 @@ resource "azurerm_virtual_network" "myterraformnetwork" {
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
 
     tags {
-        environment = "Terraform Demo"
+        environment = "${var.environment_tag}"
     }
 }
 resource "azurerm_subnet" "myterraformsubnet" {
@@ -27,7 +27,7 @@ resource "azurerm_public_ip" "myterraformpublicip" {
     allocation_method            = "${var.public_ip_allocation_method}"
 
     tags {
-        environment = "Terraform Demo"
+        environment = "${var.environment_tag}"
     }
 }
 resource "azurerm_network_security_group" "myterraformnsg" {
@@ -94,7 +94,7 @@ resource "azurerm_network_security_group" "myterraformnsg" {
 
 
     tags {
-        environment = "Terraform Demo"
+        environment = "${var.environment_tag}"
     }
 }
 resource "azurerm_network_interface" "myterraformnic" {
@@ -130,7 +130,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
     account_tier = "Standard"
 
     tags {
-        environment = "Terraform Demo"
+        environment = "${var.environment_tag}"
     }
 }
 resource "azurerm_virtual_machine" "myterraformvm" {
@@ -170,7 +170,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     }
 
     tags {
-        environment = "Terraform Demo"
+        environment = "${var.environment_tag}"
     }
 }
 
