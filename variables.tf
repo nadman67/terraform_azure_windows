@@ -119,3 +119,7 @@ variable "is_linux" {
   description = "if linux deployment, set his variable to true"
   default = false
   }
+
+variable "environment_tag" {
+  description = "tag for environment"
+  }
